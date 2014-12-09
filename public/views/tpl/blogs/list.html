@@ -1,6 +1,6 @@
 <div ng-if="success" ng-repeat="blog in blogs">
   <h2 >{{ blog.title }}</h2>
-  <p>{{ blog.contents }}</p>
+  <p ng-bind-html="blog.contents"></p>
 </div>
 
 <h2 ng-if="!success">{{ error_message }}</h2>
