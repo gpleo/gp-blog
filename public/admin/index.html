@@ -1,0 +1,50 @@
+<html >
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+  <script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../bower_components/angular-route/angular-route.min.js"></script>
+  <script type="text/javascript" src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+  <script type="text/javascript" src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+  <script type="text/javascript" src="javascripts/admin.js"></script>
+  <script type="text/javascript" src="javascripts/blog/createCtrl.js"></script>
+  <title>Index</title>
+  <style type='text/css'>
+    body {
+      background-color: #CCC;
+    }
+    .center {
+      width: 90%;
+      display: table;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body ng-app="app">
+  <h1 class="center">TWITTER BOOTSTRAP TUTORIAL</h1>
+  <div class='navbar navbar-inverse center'>
+    <div class='nav-collapse' style="height: auto;">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <!--<li><a href="#">Page One</a></li>-->
+        <!--<li><a href="#">Page Two</a></li>-->
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid center" style="background-color: #FFF;">
+    <div class="row">
+      <div class="col-md-9 main">
+        <div ng-view></div>
+      </div>
+      <div class="col-md-3 sidebar">
+        <h2>Sidebar</h2>
+        <p><a href="#">Sidebar 1</a></p>
+        <p><a href="#">Sidebar 2</a></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

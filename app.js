@@ -37,11 +37,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator([]));
 app.use(cookieParser());
+
+app.use('/admin', require('./routes/admin.js'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', function (req, res) {
-  res.sendfile('public/index.html');
-});
+//app.get('/', function (req, res) {
+//  res.sendfile('public/index.html');
+//});
+//
+//app.get('/admin', function (req, res) {
+//  res.sendfile('public/admin/index.html');
+//});
 
 app.use('/blog', require('./routes/blog.js'));
 
