@@ -11,7 +11,7 @@ blogs.use(function (req, res, next) {
   next();
 });
 
-blogs.use('', require('./blogsValidator.js'));
+blogs.use('', require('./blogValidator.js'));
 
 blogs.route('/')
   .get(function (req, res, next) {

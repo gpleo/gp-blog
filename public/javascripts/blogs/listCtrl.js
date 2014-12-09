@@ -3,7 +3,7 @@
 app.controller('ListCtrl', ['$http', '$q', '$scope', function ($http, $q, $scope) {
   $http({
     method: 'GET',
-    url: 'http://localhost:3000/blogs/',
+    url: 'http://localhost:3000/blog/',
     responseType: 'json'
   }).success(function (response) {
     if (response.docs.length === 0) {

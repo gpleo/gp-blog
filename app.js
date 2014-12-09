@@ -43,7 +43,7 @@ app.get('/', function (req, res) {
   res.sendfile('public/index.html');
 });
 
-app.use('/blogs', require('./routes/blogs.js'));
+app.use('/blog', require('./routes/blog.js'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
