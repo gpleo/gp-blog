@@ -1,10 +1,10 @@
 var logger = require('log4js').getLogger('default');
 var express = require('express');
-var blogsValidator = express.Router();
+var blogValidator = express.Router();
 
-blogsValidator.route('/')
+blogValidator.route('/')
   .post(function (req, res, next) {
-    logger.trace('enter blogsValidator /.post');
+    logger.trace('enter blogValidator /.post');
 
     req.assert('title', 'required').notEmpty();
     req.assert('contents', 'required').notEmpty();
@@ -23,4 +23,4 @@ blogsValidator.route('/')
     }
   });
 
-module.exports = blogsValidator;
+module.exports = blogValidator;

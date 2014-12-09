@@ -2,20 +2,20 @@
 
 var logger = require('log4js').getLogger('default');
 var express = require('express');
-var blogs = express.Router();
+var blog = express.Router();
 var BlogModel = require('../models/BlogModel.js');
 var blogModel = new BlogModel();
 
-blogs.use(function (req, res, next) {
-  logger.trace('enter blogs router.');
+blog.use(function (req, res, next) {
+  logger.trace('enter blog router.');
   next();
 });
 
-blogs.use('', require('./blogValidator.js'));
+blog.use('', require('./blogValidator.js'));
 
-blogs.route('/')
+blog.route('/')
   .get(function (req, res, next) {
-    logger.trace('get blogs list.');
+    logger.trace('get blog list.');
 
     blogModel.list(function (error, docs) {
       if (error) {
@@ -50,8 +50,8 @@ blogs.route('/')
     });
   });
 
-blogs.use(function (req, res, next) {
-  logger.trace('finish blogs router.');
+blog.use(function (req, res, next) {
+  logger.trace('finish blog router.');
   if (res.result) {
     res.json(res.result);
   } else {
@@ -59,4 +59,4 @@ blogs.use(function (req, res, next) {
   }
 });
 
-module.exports = blogs;
+module.exports = blog;
