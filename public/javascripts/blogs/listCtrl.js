@@ -1,12 +1,12 @@
 'use strict';
 
-app.controller('ListCtrl', ['$http', '$q', '$scope', function ($http, $q, $scope) {
+app.controller('ListCtrl', ['$http', '$q', '$scope', '$location', function ($http, $q, $scope, $location) {
   $http({
     method: 'GET',
-    url: 'http://localhost:3000/blog/',
+    url: 'http://localhost:3000/blogs/',
     responseType: 'json'
   }).success(function (response) {
-    if (response.docs.length === 0) {
+    if (response.success && response.docs.length === 0) {
       $scope.success = false;
       $scope.error_message = 'No records.';
     } else {
@@ -18,4 +18,8 @@ app.controller('ListCtrl', ['$http', '$q', '$scope', function ($http, $q, $scope
     $scope.success = false;
     $scope.error_message = response;
   });
+
+  $scope.goDetail = function (_id) {
+    $location.path('blogs/' + _id);
+  };
 }]);

@@ -6,7 +6,7 @@ app.controller('CreateCtrl', ['$http', '$q', '$scope', function ($http, $q, $sco
   $scope.save = function () {
     $http({
       method: 'POST',
-      url: 'http://localhost:3000/blog/',
+      url: 'http://localhost:3000/blogs/',
       data: {
         title: $('#title').val(),
         contents: CKEDITOR.instances.ckeditor.getData()

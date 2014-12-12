@@ -1,5 +1,7 @@
-<div ng-if="success" ng-repeat="blog in blogs">
+<div ng-if="success">
   <h2 >{{ blog.title }}</h2>
+  <span>{{ blog.created_at | date: 'yyyy-MM-dd HH:mm'}}</span>
+  <hr>
   <p ng-bind-html="blog.contents"></p>
 </div>
 

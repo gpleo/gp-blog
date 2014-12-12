@@ -38,7 +38,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator([]));
 app.use(cookieParser());
 
-app.use('/admin', require('./routes/admin.js'));
+app.use('/admin', require('./routes/admins.js'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //app.get('/', function (req, res) {
@@ -49,7 +49,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //  res.sendfile('public/admin/index.html');
 //});
 
-app.use('/blog', require('./routes/blog.js'));
+app.use('/blogs', require('./routes/blogs.js'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -2,22 +2,28 @@
 
 var logger = require('log4js').getLogger('default');
 var express = require('express');
-var blog = express.Router();
+var blogs = express.Router();
 var BlogModel = require('../models/BlogModel.js');
 var blogModel = new BlogModel();
 
-blog.use(function (req, res, next) {
-  logger.trace('enter blog router.');
+blogs.use(function (req, res, next) {
+  logger.trace('enter blogs router.');
   next();
 });
 
-blog.use('', require('./blogValidator.js'));
+blogs.use('', require('./blogsValidator.js'));
 
-blog.route('/')
+blogs.route('/')
   .get(function (req, res, next) {
-    logger.trace('get blog list.');
+    logger.trace('get blogs list.');
 
-    blogModel.list(function (error, docs) {
+    var data = {
+      page: {
+        page_number: req.query.page_number,
+        limit: req.query.limit
+      }
+    };
+    blogModel.list(data, function (error, docs) {
       if (error) {
         res.result = {
           success: false,
@@ -50,8 +56,28 @@ blog.route('/')
     });
   });
 
-blog.use(function (req, res, next) {
-  logger.trace('finish blog router.');
+blogs.route('/:_id')
+  .get(function(req, res, next) {
+    logger.trace('get blog detail. _id: ' + req.params._id);
+
+    blogModel.get(req.params._id, function (error, doc) {
+      if (error) {
+        res.result = {
+          success: false,
+          error_message: error
+        }
+      } else {
+        res.result = {
+          success: true,
+          doc: doc
+        }
+      }
+      next();
+    });
+  });
+
+blogs.use(function (req, res, next) {
+  logger.trace('finish blogs router.');
   if (res.result) {
     res.json(res.result);
   } else {
@@ -59,4 +85,4 @@ blog.use(function (req, res, next) {
   }
 });
 
-module.exports = blog;
+module.exports = blogs;

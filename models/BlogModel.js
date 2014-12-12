@@ -15,9 +15,50 @@ function BlogModel () {
   this.Blog = mongoose.model('blog', BlogSchema);
 }
 
-BlogModel.prototype.list = function (callback) {
-  this.Blog.find({}, function (error, docs) {
+/**
+ * 获取Blog列表
+ * @param data = {
+ *   page: {
+ *     page_number: Number(default: 10),
+ *     limit: Number(default: 0)
+ *   }
+ * }
+ * @param callback
+ */
+BlogModel.prototype.list = function (data, callback) {
+  var fields = {
+    title: 1,
+    created_at: 1
+  }, options = {
+    skip: 0,
+    limit: 2,
+    sort: {
+      create_at: -1
+    }
+  };
+
+  if (data.page && data.page.limit && data.page.limit > 0) {
+    options.limit = data.page.limit;
+  } else {
+    options.limit = 10;
+  }
+  if (data.page && data.page.page_number && data.page.page_number > 0) {
+    options.skip = data.page.page_number * options.limit;
+  }
+
+  this.Blog.find({}, fields, options, function (error, docs) {
     callback(error, docs);
+  });
+};
+
+/**
+ * 获取Blog详细内容
+ * @param _id
+ * @param callback
+ */
+BlogModel.prototype.get = function (_id, callback) {
+  this.Blog.findOne({_id: _id}, function (error, doc) {
+    callback(error, doc);
   });
 };
 

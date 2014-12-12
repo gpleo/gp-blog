@@ -2,10 +2,10 @@
 
 var logger = require('log4js').getLogger('default');
 var express = require('express');
-var admin = express.Router();
+var admins = express.Router();
 
-admin.use(function (req, res, next) {
-  logger.trace('enter admin router.');
+admins.use(function (req, res, next) {
+  logger.trace('enter admins router.');
 
   if (req.headers['authorization']) {
     var auth = req.headers['authorization'];
@@ -19,8 +19,8 @@ admin.use(function (req, res, next) {
   next();
 });
 
-admin.use(function (req, res, next) {
-  logger.trace('finish admin router.');
+admins.use(function (req, res, next) {
+  logger.trace('finish admins router.');
   if (res.result && res.result.success) {
     next();
   } else {
@@ -31,4 +31,4 @@ admin.use(function (req, res, next) {
   }
 });
 
-module.exports = admin;
+module.exports = admins;
