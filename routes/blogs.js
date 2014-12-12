@@ -18,10 +18,7 @@ blogs.route('/')
     logger.trace('get blogs list.');
 
     var data = {
-      page: {
-        page_number: req.query.page_number,
-        limit: req.query.limit
-      }
+      page: req.query.page
     };
     blogModel.list(data, function (error, docs) {
       if (error) {
