@@ -5,6 +5,7 @@ var express = require('express');
 var blogs = express.Router();
 var BlogModel = require('../models/BlogModel.js');
 var blogModel = new BlogModel();
+var async = require('async');
 
 blogs.use(function (req, res, next) {
   logger.trace('enter blogs router.');
@@ -18,22 +19,48 @@ blogs.route('/')
     logger.trace('get blogs list.');
 
     var data = {
-      page: req.query.page
-    };
-    blogModel.list(data, function (error, docs) {
-      if (error) {
-        res.result = {
-          success: false,
-          error_message: error
-        }
-      } else {
-        res.result = {
-          success: true,
-          docs: docs
-        }
+      page: req.query.page,
+      limit: 10,
+      fields: {
+        title: 1,
+        created_at: 1
+      },
+      sort: {
+        created_at: -1
       }
-      next();
-    });
+    };
+    if (data.page && data.page > 0) {
+      data.skip = data.page * data.limit;
+    }
+
+    async.parallel({
+      list: function (callback) {
+        blogModel.list(data, function (error, docs) {
+          callback(error, docs);
+        });
+      },
+      count: function(callback) {
+        blogModel.count(data, function (error, count) {
+          callback(error, count);
+        });
+      }
+    },
+      function(error, results){
+        if (error) {
+          res.result = {
+            success: false,
+            error_message: error
+          }
+        } else {
+          res.result = {
+            success: true,
+            list: results.list,
+            count: results.count,
+            limit: data.limit
+          }
+        }
+        next();
+      });
   })
   .post(function (req, res, next) {
     logger.trace('post a blog.');

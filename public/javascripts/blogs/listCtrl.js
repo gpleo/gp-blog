@@ -1,7 +1,11 @@
 'use strict';
 
-app.controller('ListCtrl', ['$http', '$q', '$scope', '$location', function ($http, $q, $scope, $location) {
+app.controller('ListCtrl', ['$http', '$q', '$scope', '$location', '$routeParams', function ($http, $q, $scope, $location, $routeParams) {
   $scope.current_page = 1;
+  if ($routeParams.page && $routeParams.page > 0) {
+    $scope.current_page = $routeParams.page;
+  }
+  $scope.pages = [1];
 
   var findData = function () {
     $http({
@@ -9,13 +13,26 @@ app.controller('ListCtrl', ['$http', '$q', '$scope', '$location', function ($htt
       url: 'http://localhost:3000/blogs?page=' + ($scope.current_page - 1),
       responseType: 'json'
     }).success(function (response) {
-      if (response.success && response.docs.length === 0) {
-        $scope.success = false;
-        $scope.error_message = 'No records.';
-      } else {
-        $scope.success = response.success;
-        $scope.error_message = response.error_message;
-        $scope.blogs = response.docs;
+      $scope.success = response.success;
+      $scope.error_message = response.error_message;
+      $scope.blogs = response.list;
+
+      if (response.success) {
+        if (response.list.length === 0) {
+          $scope.success = false;
+          $scope.error_message = 'No records.';
+        }
+        if (response.count && response.count > 0 && response.limit && response.limit > 0) {
+          var i,
+            tmpPages = response.count / response.limit;
+          $scope.pages = [];
+          for (i = 1; i <= tmpPages; i ++) {
+            $scope.pages.push(i);
+          }
+          if (response.count % response.limit > 0) {
+            $scope.pages.push(i);
+          }
+        }
       }
     }).error(function (response) {
       $scope.success = false;
@@ -25,10 +42,9 @@ app.controller('ListCtrl', ['$http', '$q', '$scope', '$location', function ($htt
   findData();
 
   $scope.goPage = function (page) {
-    $scope.current_page = page;
-    findData();
+    $location.url('blogs?page=' + page);
   };
   $scope.goDetail = function (_id) {
-    $location.path('blogs/' + _id);
+    $location.url('blogs/' + _id);
   };
 }]);
