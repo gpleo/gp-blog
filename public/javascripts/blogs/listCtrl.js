@@ -1,49 +1,88 @@
 'use strict';
 
 app.controller('ListCtrl', ['$http', '$q', '$scope', '$location', '$routeParams', function ($http, $q, $scope, $location, $routeParams) {
-  $scope.current_page = 1;
-  if ($routeParams.page && $routeParams.page > 0) {
-    $scope.current_page = $routeParams.page;
-  }
-  $scope.pages = [1];
+  var blogs = {},
+    categories = {};
 
-  var findData = function () {
+  blogs.current_page = 1;
+  if ($routeParams.page && $routeParams.page > 0) {
+    blogs.current_page = $routeParams.page;
+  }
+  blogs.category = '';
+  if ($routeParams.category) {
+    blogs.category = $routeParams.category;
+  }
+  blogs.pages = [1];
+
+  var findBlogData = function () {
     $http({
       method: 'GET',
-      url: 'http://localhost:3000/blogs?page=' + ($scope.current_page - 1),
+      url: 'http://localhost:3000/blogs?category=' + blogs.category + '&page=' + (blogs.current_page - 1),
       responseType: 'json'
     }).success(function (response) {
-      $scope.success = response.success;
-      $scope.error_message = response.error_message;
-      $scope.blogs = response.list;
+      blogs.success = response.success;
+      blogs.error_message = response.error_message;
+      blogs.list = response.list;
 
       if (response.success) {
         if (response.list.length === 0) {
-          $scope.success = false;
-          $scope.error_message = 'No records.';
+          blogs.success = false;
+          blogs.error_message = 'No records.';
         }
         if (response.count && response.count > 0 && response.limit && response.limit > 0) {
           var i,
             tmpPages = response.count / response.limit;
-          $scope.pages = [];
+          blogs.pages = [];
           for (i = 1; i <= tmpPages; i ++) {
-            $scope.pages.push(i);
+            blogs.pages.push(i);
           }
           if (response.count % response.limit > 0) {
-            $scope.pages.push(i);
+            blogs.pages.push(i);
           }
         }
       }
+      console.log(blogs);
     }).error(function (response) {
-      $scope.success = false;
-      $scope.error_message = response;
+      blogs.success = false;
+      blogs.error_message = response;
     });
+    $scope.blogs = blogs;
   };
-  findData();
 
-  $scope.goPage = function (page) {
-    $location.url('blogs?page=' + page);
+  var findCategoryData = function () {
+    $http({
+      method: 'GET',
+      url: 'http://localhost:3000/categories',
+      responseType: 'json'
+    }).success(function (response) {
+      categories.success = response.success;
+      categories.error_message = response.error_message;
+      categories.list = response.list;
+
+      if (response.success) {
+        if (response.list.length === 0) {
+          categories.success = false;
+          categories.error_message = 'No records.';
+        }
+      }
+    }).error(function (response) {
+      categories.success = false;
+      categories.error_message = response;
+    });
+    $scope.categories = categories;
   };
+  findBlogData();
+  findCategoryData();
+
+  var go = function (category, page) {
+    $location.url('blogs?category=' + category + '&page=' + page);
+  };
+  $scope.goPage = function (page) {
+    go(blogs.category, page);
+  };
+  $scope.goCategory = function (_id) {
+    go(_id, blogs.current_page);
+  }
   $scope.goDetail = function (_id) {
     $location.url('blogs/' + _id);
   };

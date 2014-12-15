@@ -20,6 +20,7 @@ blogs.route('/')
 
     var data = {
       page: req.query.page,
+      category: req.query.category,
       limit: 10,
       fields: {
         title: 1,
@@ -31,6 +32,11 @@ blogs.route('/')
     };
     if (data.page && data.page > 0) {
       data.skip = data.page * data.limit;
+    }
+    if (data.category) {
+      data.criteria = {
+        category: data.category
+      }
     }
 
     async.parallel({

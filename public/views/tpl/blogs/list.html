@@ -1,16 +1,23 @@
-<br>
-<table ng-if="success" class="table table-striped table-hover">
-  <tr ng-repeat="blog in blogs" ng-click="goDetail(blog._id)" style="cursor: pointer;">
-    <td>
-      {{ blog.title }}
-    </td>
-    <td style="width: 150px;">
-      {{ blog.created_at | date: 'yyyy-MM-dd HH:mm'}}
-    </td>
-  </tr>
-</table>
-<div ng-if="success" class="container-fluid center" style="text-align: center;">
-  <button ng-repeat="page in pages" type="button" class="btn {{current_page==page?'btn-primary disabled':'btn-default'}}" ng-click="goPage(page);">{{page}}</button>
+<div class="col-md-9 main">
+  <br>
+  <table ng-if="blogs.success" class="table table-striped table-hover">
+    <tr ng-repeat="blog in blogs.list" ng-click="goDetail(blog._id)" style="cursor: pointer;">
+      <td>
+        {{ blog.title }}
+      </td>
+      <td style="width: 150px;">
+        {{ blog.created_at | date: 'yyyy-MM-dd HH:mm'}}
+      </td>
+    </tr>
+  </table>
+  <div ng-if="blogs.success" class="container-fluid center" style="text-align: center;">
+    <button ng-repeat="page in blogs.pages" type="button" class="btn {{blogs.current_page==page?'btn-primary disabled':'btn-default'}}" ng-click="goPage(page);">{{page}}</button>
+  </div>
+  <h2 ng-if="!blogs.success">{{ blogs.error_message }}</h2>
+  <br>
 </div>
-<h2 ng-if="!success">{{ error_message }}</h2>
-<br>
+<div class="col-md-3 sidebar">
+  <h2>类别</h2>
+  <p ng-repeat="category in categories.list"><a href="" ng-click="goCategory(category._id)">{{category.name}}</a></p>
+</div>
+

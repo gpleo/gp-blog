@@ -54,8 +54,6 @@ BlogModel.prototype.list = function (data, callback) {
     options.sort = data.sort;
   }
 
-
-
   this.Blog.find(criteria, fields, options)
 //    .populate('category')
     .exec(function (error, docs) {
