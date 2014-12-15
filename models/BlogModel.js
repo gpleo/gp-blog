@@ -3,6 +3,10 @@
 var mongoose = require('mongoose');
 
 var BlogSchema = mongoose.Schema({
+  category: {
+    type : mongoose.Schema.ObjectId,
+    ref : 'category'
+  },
   title: String,
   contents: String,
   status: String,
@@ -50,7 +54,11 @@ BlogModel.prototype.list = function (data, callback) {
     options.sort = data.sort;
   }
 
-  this.Blog.find(criteria, fields, options, function (error, docs) {
+
+
+  this.Blog.find(criteria, fields, options)
+//    .populate('category')
+    .exec(function (error, docs) {
     callback(error, docs);
   });
 };

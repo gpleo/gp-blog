@@ -50,6 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //});
 
 app.use('/blogs', require('./routes/blogs.js'));
+app.use('/categories', require('./routes/categories.js'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
