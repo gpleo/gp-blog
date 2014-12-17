@@ -1,7 +1,9 @@
 'use strict';
 
 app.controller('CreateCtrl', ['$http', '$q', '$scope', function ($http, $q, $scope) {
-  CKEDITOR.replace('ckeditor');
+  CKEDITOR.replace('ckeditor', {
+    extraPlugins: 'codesnippet'
+  });
 
   $scope.save = function () {
     $http({
