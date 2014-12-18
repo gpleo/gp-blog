@@ -8,6 +8,7 @@ blogsValidator.route('/')
 
     req.assert('title', 'required').notEmpty();
     req.assert('contents', 'required').notEmpty();
+
     if (req.validationErrors()) {
       res.status(400);
       res.json({
@@ -18,6 +19,12 @@ blogsValidator.route('/')
       req.data = {
         title: req.body.title,
         contents: req.body.contents
+      };
+      if (req.body.created_at) {
+        req.data.created_at = Date.create(req.body.created_at);
+        if (!req.data.created_at.isValid()) {
+          req.data.created_at = null;
+        }
       }
       next();
     }

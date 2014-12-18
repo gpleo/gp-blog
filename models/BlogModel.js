@@ -12,7 +12,7 @@ var BlogSchema = mongoose.Schema({
   status: String,
   created_at: {type: Date, default: Date.now},
   updated_at: {type: Date, default: Date.now},
-  published_at: Date
+  published_at: {type: Date, default: Date.now}
 });
 
 function BlogModel () {
@@ -101,7 +101,11 @@ BlogModel.prototype.get = function (_id, callback) {
 BlogModel.prototype.create = function (data, callback) {
   var blog = new this.Blog(data);
   blog.status = 'publish';
-  blog.published_at = new Date();
+  if (data.created_at) {
+    blog.created_at = data.created_at;
+    blog.updated_at = data.created_at;
+    blog.published_at = data.created_at;
+  }
   blog.save(function (error) {
     callback(error);
   });

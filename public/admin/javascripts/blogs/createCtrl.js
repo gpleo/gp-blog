@@ -4,6 +4,11 @@ app.controller('CreateCtrl', ['$http', '$q', '$scope', function ($http, $q, $sco
   CKEDITOR.replace('ckeditor', {
     extraPlugins: 'codesnippet'
   });
+  $('#datetime').datetimepicker({
+    changeMonth: true,
+    changeYear: true
+  });
+  $('#datetime').datetimepicker("option", "dateFormat", "yy-mm-dd");
 
   $scope.save = function () {
     $http({
@@ -11,6 +16,7 @@ app.controller('CreateCtrl', ['$http', '$q', '$scope', function ($http, $q, $sco
       url: 'http://localhost:3000/blogs/',
       data: {
         title: $('#title').val(),
+        created_at: $('#datetime').val(),
         contents: CKEDITOR.instances.ckeditor.getData()
       },
       responseType: 'json'
