@@ -41,7 +41,6 @@ app.controller('ListCtrl', ['$http', '$q', '$scope', '$location', '$routeParams'
           }
         }
       }
-      console.log(blogs);
     }).error(function (response) {
       blogs.success = false;
       blogs.error_message = response;

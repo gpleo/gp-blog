@@ -1,7 +1,13 @@
 <div>
   <br>
-  <p>标题：<input type="text" style="width:96%;" id="title" value="默认标题"/></p>
+  <p>标题：<input type="text" style="width:96%;" id="title" value=""/></p>
   <p>时间：<input type="text" id="datetime" size="30"></p>
+  <p>类别：
+    <select ng-model="category" ng-options="category._id as category.name for category in categories.list">
+      <option value="">-- 请选择 --</option>
+    </select>
+    <span ng-if="!categories.success">{{categories.error_message}}</span>
+  </p>
   <div id="ckeditor"></div>
   <br>
 

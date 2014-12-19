@@ -8,6 +8,7 @@ blogsValidator.route('/')
 
     req.assert('title', 'required').notEmpty();
     req.assert('contents', 'required').notEmpty();
+    req.assert('category', 'required').notEmpty();
 
     if (req.validationErrors()) {
       res.status(400);
@@ -18,7 +19,8 @@ blogsValidator.route('/')
     } else {
       req.data = {
         title: req.body.title,
-        contents: req.body.contents
+        contents: req.body.contents,
+        category: req.body.category
       };
       if (req.body.created_at) {
         req.data.created_at = Date.create(req.body.created_at);

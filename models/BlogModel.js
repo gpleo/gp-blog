@@ -94,12 +94,15 @@ BlogModel.prototype.get = function (_id, callback) {
 /**
  * @param data = {
  *   title: String,
- *   contents: String
+ *   contents: String,
+ *   category: String,
+ *   created_at: Date // 可选，没有时用当前时间
  * }
  * @param callback
  */
 BlogModel.prototype.create = function (data, callback) {
   var blog = new this.Blog(data);
+  blog.category = data.category;
   blog.status = 'publish';
   if (data.created_at) {
     blog.created_at = data.created_at;
