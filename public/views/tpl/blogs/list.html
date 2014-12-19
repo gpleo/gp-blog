@@ -18,6 +18,10 @@
 </div>
 <div class="col-md-3 sidebar">
   <h2>类别</h2>
+  <p>
+    <span ng-if="''===blogs.category" style="font-weight:bold;text-decoration:underline;color:#337ab7;">全部</span>
+    <a ng-if="''!==blogs.category" href="" ng-click="goCategory('')">全部</a>
+  </p>
   <p ng-repeat="category in categories.list">
     <span ng-if="category._id===blogs.category" style="font-weight:bold;text-decoration:underline;color:#337ab7;">{{category.name}}</span>
     <a ng-if="category._id!==blogs.category" href="" ng-click="goCategory(category._id)">{{category.name}}</a>
