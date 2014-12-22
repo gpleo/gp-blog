@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('app', ['ngRoute', 'ngSanitize']);
+var app = angular.module('app', ['ngRoute', 'ngSanitize', 'app.statistics']);
 
 app.config(['$routeProvider', function ($routeProvider) {
   $routeProvider

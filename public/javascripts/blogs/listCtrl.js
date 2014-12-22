@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('ListCtrl', ['$http', '$q', '$scope', '$location', '$routeParams', function ($http, $q, $scope, $location, $routeParams) {
+app.controller('ListCtrl', ['$http', '$q', '$scope', '$location', '$routeParams', 'app.statistics.mixpanel', function ($http, $q, $scope, $location, $routeParams, statistics) {
   var blogs = {},
     categories = {};
 
@@ -73,6 +73,8 @@ app.controller('ListCtrl', ['$http', '$q', '$scope', '$location', '$routeParams'
   findBlogData();
   findCategoryData();
 
+  statistics.trackList(blogs.current_page, blogs.category);
+
   var go = function (category, page) {
     $location.url('blogs?category=' + category + '&page=' + page);
   };
@@ -80,7 +82,7 @@ app.controller('ListCtrl', ['$http', '$q', '$scope', '$location', '$routeParams'
     go(blogs.category, page);
   };
   $scope.goCategory = function (_id) {
-    go(_id, blogs.current_page);
+    go(_id, 1);
   }
   $scope.goDetail = function (_id) {
     $location.url('blogs/' + _id);

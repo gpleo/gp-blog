@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('DetailCtrl', ['$http', '$q', '$scope', '$routeParams', function ($http, $q, $scope, $routeParams) {
+app.controller('DetailCtrl', ['$http', '$q', '$scope', '$routeParams', 'app.statistics.mixpanel', function ($http, $q, $scope, $routeParams, statistics) {
   $http({
     method: 'GET',
     url: 'http://localhost:3000/blogs/' + $routeParams._id,
@@ -18,4 +18,6 @@ app.controller('DetailCtrl', ['$http', '$q', '$scope', '$routeParams', function 
     $scope.success = false;
     $scope.error_message = response;
   });
+
+  statistics.trackDetail($routeParams._id);
 }]);
