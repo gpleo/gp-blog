@@ -14,7 +14,7 @@ var expressValidator = require('express-validator');
 
 var log4js = require('log4js');
 log4js.loadAppender('file');
-log4js.addAppender(log4js.appenders.file(__dirname + '/logs/log4js.log'), 'default');
+log4js.addAppender(log4js.appenders.file(__dirname + '/logs/app.log'), 'default');
 var logger = log4js.getLogger('default');
 //logger.setLevel('ERROR');
 logger.setLevel('TRACE');
@@ -28,7 +28,7 @@ app.set('view engine', 'ejs');
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(morgan('dev'));
 // log error
-var errorLogfile = fs.createWriteStream(__dirname + '/logs/error.log', {flags: 'a'});
+var errorLogfile = fs.createWriteStream(__dirname + '/logs/http_error.log', {flags: 'a'});
 app.use(morgan('combined', {
   skip: function (req, res) {
     return res.statusCode < 400;
