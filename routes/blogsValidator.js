@@ -1,3 +1,5 @@
+'use strict';
+
 var logger = require('log4js').getLogger('default');
 var express = require('express');
 var blogsValidator = express.Router();

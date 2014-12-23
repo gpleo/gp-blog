@@ -12,6 +12,7 @@ blogs.use(function (req, res, next) {
   next();
 });
 
+blogs.use('', require('./blogsAuthorizer.js'));
 blogs.use('', require('./blogsValidator.js'));
 
 blogs.route('/')
