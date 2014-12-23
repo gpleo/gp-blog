@@ -20,7 +20,7 @@ exports.httpBaseAuth = function (req, res, next) {
   if (rightful) {
     next();
   } else {
-    logger.debug('Login failure, authorization: ', req.headers['authorization']);
+    logger.error('Login failure, authorization: ', req.headers['authorization']);
     res.set('WWW-Authenticate', 'Basic realm=""');
     res.status(401);
     res.json({
