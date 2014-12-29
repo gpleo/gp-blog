@@ -2,3 +2,4 @@
 /.idea
 /logs
 /public/bower_components
+/db
