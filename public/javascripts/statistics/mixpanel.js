@@ -3,7 +3,7 @@
 mixpanel.init("185e04b6a7556fe53a61ad4028263c71");
 
 angular.module('app.statistics', [])
-  .service('app.statistics.mixpanel', function () {
+  .service('app.statistics.helper', function () {
     // 记录列表页
     var trackList = function (page, category_id) {
       mixpanel.track("List blogs", {

@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('ListCtrl', ['$http', '$q', '$scope', '$location', '$routeParams', 'app.statistics.mixpanel', function ($http, $q, $scope, $location, $routeParams, statistics) {
+app.controller('ListCtrl', ['$http', '$q', '$scope', '$location', '$routeParams', 'app.statistics.helper', function ($http, $q, $scope, $location, $routeParams, statistics) {
   var blogs = {},
     categories = {};
 
